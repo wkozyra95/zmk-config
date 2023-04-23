@@ -1,0 +1,13 @@
+file_format: "1"
+id: dactyl
+name: dactyl
+type: shield
+url: https://github.com/wkozyra95/zmk-config
+requires: [pro_micro]
+exposes: []
+features:
+  - keys
+siblings:
+  - dactyl_left
+  - dactyl_right
+  - dactyl_dongle
