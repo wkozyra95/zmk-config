@@ -12,13 +12,6 @@
 
 / {
     behaviors {
-        td_flush: tap_dance_flush {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TAP_DANCE_FLUSH";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&trans>, <&bootloader>;
-        };
         td_cad: tap_dance_cad {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_DANCE_CTL_ALT_DEL";
@@ -34,13 +27,19 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&macro_press &kp LCTL>
-                , <&macro_press &kp LALT>
-                , <&macro_press &kp DEL>
+                = <&macro_press &kp LCTL &kp LALT &kp DEL>
                 , <&macro_pause_for_release>
-                , <&macro_release &kp DEL>
-                , <&macro_release &kp LALT>
-                , <&macro_release &kp LCTL>
+                , <&macro_release &kp DEL &kp LALT &kp LCTL>
+                ;
+        };
+        ctl_alt_m2: ctl_alt_m2 {
+            label = "ZM_ctl_alt_m2";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTL &kp LALT &mo 2>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp DEL &kp LALT &mo 2>
                 ;
         };
     };
@@ -50,20 +49,20 @@
 
 		default_layer {
 			bindings = <
-&kp Q        &kp W        &kp E        &kp R        &kp T                                 &kp Y     &kp U        &kp I        &kp O        &kp P
-&kp A        &kp S        &kp D        &kp F        &kp G                                 &kp H     &kp J        &kp K        &kp L        &kp SEMI
-&kp Z        &kp X        &kp C        &kp V        &kp B                                 &kp N     &kp M        &kp COMMA    &kp DOT      &kp SLASH
-             &mo 2        &kp LALT                                                                               &kp BSPC     &mo 2
-                                       &kp ESC      &kp LGUI    &mo 2           &kp BSPC  &kp SPACE &kp TAB
-                                       &kp LSHFT    &kp LCTL    &kp RALT        &kp DEL   &mo 1     &kp ENTER
+&kp Q        &kp W        &kp E        &kp R        &kp T                                 &kp Y     &kp U        &kp I        &kp O       &kp P
+&kp A        &kp S        &kp D        &kp F        &kp G                                 &kp H     &kp J        &kp K        &kp L       &kp SEMI
+&kp Z        &kp X        &kp C        &kp V        &kp B                                 &kp N     &kp M        &kp COMMA    &kp DOT     &kp SLASH
+             &td_cad      &kp LALT                                                                               &kp BSPC     &ctl_alt_m2
+                                       &kp ESC      &kp LGUI    &mo 2           &mo 2     &kp SPACE &kp TAB
+                                       &kp LSHFT    &kp LCTL    &kp RALT        &kp ENTER &mo 1     &kp ENTER
 			>;
 		};
 
 		raise_layer {
 			bindings = <
-&kp N1       &kp N2       &kp N3       &kp N4       &kp N5                                &kp N6    &kp N7       &kp N8       &kp N9       &kp N0
-&kp GRAVE    &trans       &kp DEL      &trans       &trans                                &kp LEFT  &kp DOWN     &kp UP       &kp RIGHT    &kp APOS
-&trans       &trans       &trans       &trans       &trans                                &kp MINUS &kp EQUAL    &kp LBKT     &kp RBKT     &kp BACKSLASH
+&kp N1       &kp N2       &kp N3       &kp N4       &kp N5                                &kp N6    &kp N7       &kp N8       &kp N9      &kp N0
+&kp GRAVE    &trans       &kp DEL      &trans       &trans                                &kp LEFT  &kp DOWN     &kp UP       &kp RIGHT   &kp APOS
+&trans       &trans       &trans       &trans       &trans                                &kp MINUS &kp EQUAL    &kp LBKT     &kp RBKT    &kp BACKSLASH
              &trans       &trans                                                                                 &trans       &trans
                                        &trans       &trans      &trans          &trans    &trans    &trans
                                        &trans       &trans      &trans          &trans    &trans    &trans
@@ -72,9 +71,9 @@
 
 		lower_layer {
 			bindings = <
-&kp F1       &kp F2       &kp F3       &kp F4       &kp F5                                &kp F6    &kp F7       &kp F8       &kp F9       &kp F10
-&kp F11      &kp F12      &out OUT_USB &out OUT_BLE &trans                                &kp PSCRN &kp K_VOL_DN &kp K_VOL_UP &kp K_MUTE   &kp C_PLAY_PAUSE
-&bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR                            &trans    &trans       &trans       &trans       &trans
+&kp F1       &kp F2       &kp F3       &kp F4       &kp F5                                &kp F6    &kp F7       &kp F8       &kp F9      &kp F10
+&kp F11      &kp F12      &out OUT_USB &out OUT_BLE &trans                                &kp PSCRN &kp K_VOL_DN &kp K_VOL_UP &kp K_MUTE  &kp C_PLAY_PAUSE
+&bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR                            &trans    &trans       &trans       &trans      &trans
              &trans       &bootloader                                                                            &bootloader  &trans
                                        &trans       &trans      &trans          &trans    &trans    &trans
                                        &trans       &trans      &trans          &trans    &trans    &trans
